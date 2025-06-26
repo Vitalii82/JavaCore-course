@@ -1,4 +1,3 @@
-package AirportTripPlanner;
 import model.*;
 import logic.*;
 
