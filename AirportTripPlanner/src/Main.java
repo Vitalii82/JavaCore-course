@@ -1,7 +1,6 @@
-import interfaces.Notifiable;
-import logic.NotificationService;
-import logic.TravelService;
 import model.*;
+import logic.*;
+import interfaces.*;
 
 import java.util.Arrays;
 
