@@ -1,7 +1,7 @@
-package AirportTripPlanner;
-import AirportTripPlanner.model.*;
-import AirportTripPlanner.logic.*;
-import AirportTripPlanner.interfaces.*;
+import interfaces.Notifiable;
+import logic.NotificationService;
+import logic.TravelService;
+import model.*;
 
 import java.util.Arrays;
 
