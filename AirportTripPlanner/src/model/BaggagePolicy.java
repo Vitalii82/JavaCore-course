@@ -1,16 +1,16 @@
 package model;
 
 public class BaggagePolicy {
-    private double weightLimit;
+    private double freeWeight;
     private double overchargePerKg;
 
-    public BaggagePolicy(double weightLimit, double overchargePerKg) {
-        this.weightLimit = weightLimit;
+    public BaggagePolicy(double freeWeight, double overchargePerKg) {
+        this.freeWeight = freeWeight;
         this.overchargePerKg = overchargePerKg;
     }
 
     public double calculateOvercharge(Baggage baggage) {
-        if (baggage.getWeight() <= weightLimit) return 0;
-        return (baggage.getWeight() - weightLimit) * overchargePerKg;
+        double excess = baggage.getWeight() - freeWeight;
+        return excess > 0 ? excess * overchargePerKg : 0;
     }
 }

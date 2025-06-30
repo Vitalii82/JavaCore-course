@@ -1,8 +1,6 @@
 package model;
 
-import interfaces.Payable;
-
-public class Ticket implements Payable {
+public class Ticket {
     private Passenger passenger;
     private Flight flight;
 
@@ -11,19 +9,6 @@ public class Ticket implements Payable {
         this.flight = flight;
     }
 
-    public Passenger getPassenger() { return passenger; }
-    public void setPassenger(Passenger passenger) { this.passenger = passenger; }
-
-    public Flight getFlight() { return flight; }
-    public void setFlight(Flight flight) { this.flight = flight; }
-
-    @Override
-    public double getPrice() {
-        return flight.getPrice();
-    }
-
-    @Override
-    public String toString() {
-        return "Ticket for " + passenger.getName() + ": " + flight;
-    }
+    public double getPrice() { return flight.getPrice(); }
+    public String toString() { return passenger.getName() + " - " + flight.getFrom().getCode() + " -> " + flight.getTo().getCode(); }
 }
