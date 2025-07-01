@@ -1,8 +1,8 @@
 package AirportTripPlanner;
 
-import AirportTripPlanner\bin\src\main\java\com\solvd\AirportTripPlanner.model;
-import AirportTripPlanner\bin\src\main\java\com\solvd\AirportTripPlanner.logic;
-import AirportTripPlanner\bin\src\main\java\com\solvd\AirportTripPlanner.interfaces;
+import AirportTripPlanner\src\main\java\com\solvd\course.model;
+import AirportTripPlanner\src\main\java\com\solvd\course.logic;
+import AirportTripPlanner\src\main\java\com\solvd\course.interfaces;
 
 import java.util.Arrays;
 
