@@ -7,8 +7,7 @@ import com.solvd.course.logic.TravelService;
 import com.solvd.course.model.Flight;
 import com.solvd.course.model.Passenger;
 import com.solvd.course.model.Airport;
-
-import io.opentelemetry.api.baggage.Baggage;
+import com.solvd.course.model.Baggage;
 
 
 public class Main {

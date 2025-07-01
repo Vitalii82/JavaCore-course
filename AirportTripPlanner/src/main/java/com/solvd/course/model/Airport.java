@@ -6,7 +6,7 @@ public class Airport {
     private final String code;
     private final List<Flight> flights;
 
-    public Airport(String code, List<Flight> flights) {
+    public Airport(String code, String flights) {
         this.code = code;
         this.flights = flights;
     }
