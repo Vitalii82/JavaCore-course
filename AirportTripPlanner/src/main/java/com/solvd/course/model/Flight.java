@@ -1,13 +1,13 @@
-package model;
+package com.solvd.course.model;
 
-import interfaces.HasDuration;
-import interfaces.Payable;
+import com.solvd.course.interfaces.HasDuration;
+import com.solvd.course.interfaces.Payable;
 
 public class Flight implements HasDuration, Payable {
-    private Airport from;
-    private Airport to;
-    private double price;
-    private int durationMinutes;
+    private final Airport from;
+    private final Airport to;
+    private final double price;
+    private final int durationMinutes;
 
     public Flight(Airport from, Airport to, double price, int durationMinutes) {
         this.from = from;
@@ -18,6 +18,8 @@ public class Flight implements HasDuration, Payable {
 
     public Airport getFrom() { return from; }
     public Airport getTo() { return to; }
+    @Override
     public double getPrice() { return price; }
+    @Override
     public int getDurationInMinutes() { return durationMinutes; }
 }

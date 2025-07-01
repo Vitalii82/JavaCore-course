@@ -1,13 +1,13 @@
-package logic;
-
-import exceptions.NoFlightsFoundException;
-import exceptions.RoutePlanningException;
-import model.Airport;
-import model.Flight;
-import model.Route;
+package com.solvd.course.logic;
 
 import java.util.Comparator;
 import java.util.List;
+
+import com.solvd.course.exceptions.NoFlightsFoundException;
+import com.solvd.course.exceptions.RoutePlanningException;
+import com.solvd.course.model.Airport;
+import com.solvd.course.model.Flight;
+import com.solvd.course.model.Route;
 
 public class TripPlanner {
     public Route findBestRoute(Airport from, Airport to) throws NoFlightsFoundException, RoutePlanningException {

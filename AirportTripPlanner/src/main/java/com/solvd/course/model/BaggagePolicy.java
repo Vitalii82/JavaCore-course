@@ -1,8 +1,8 @@
-package model;
+package com.solvd.course.model;
 
 public class BaggagePolicy {
-    private double freeWeight;
-    private double overchargePerKg;
+    private final double freeWeight;
+    private final double overchargePerKg;
 
     public BaggagePolicy(double freeWeight, double overchargePerKg) {
         this.freeWeight = freeWeight;

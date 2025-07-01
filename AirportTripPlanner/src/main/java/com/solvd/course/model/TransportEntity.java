@@ -1,4 +1,4 @@
-package model;
+package com.solvd.course.model;
 
 public abstract class TransportEntity {
     private Airport from;

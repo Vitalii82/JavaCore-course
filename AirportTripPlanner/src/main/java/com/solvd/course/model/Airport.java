@@ -1,10 +1,10 @@
-package model;
+package com.solvd.course.model;
 
 import java.util.List;
 
 public class Airport {
-    private String code;
-    private List<Flight> flights;
+    private final String code;
+    private final List<Flight> flights;
 
     public Airport(String code, List<Flight> flights) {
         this.code = code;

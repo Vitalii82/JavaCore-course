@@ -1,7 +1,7 @@
-package model;
+package com.solvd.course.model;
 
 public class Ticket {
-    private Passenger passenger;
+    private final Passenger passenger;
     private Flight flight;
 
     public Ticket(Passenger passenger, Flight flight) {

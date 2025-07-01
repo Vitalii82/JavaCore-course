@@ -1,10 +1,15 @@
-package AirportTripPlanner;
-
-import AirportTripPlanner\src\main\java\com\solvd\course.model;
-import AirportTripPlanner\src\main\java\com\solvd\course.logic;
-import AirportTripPlanner\src\main\java\com\solvd\course.interfaces;
-
+package com.solvd.course;
 import java.util.Arrays;
+
+import com.solvd.course.interfaces.Notifiable;
+import com.solvd.course.logic.NotificationService;
+import com.solvd.course.logic.TravelService;
+import com.solvd.course.model.Flight;
+import com.solvd.course.model.Passenger;
+import com.solvd.course.model.Airport;
+
+import io.opentelemetry.api.baggage.Baggage;
+
 
 public class Main {
     public static void main(String[] args) {

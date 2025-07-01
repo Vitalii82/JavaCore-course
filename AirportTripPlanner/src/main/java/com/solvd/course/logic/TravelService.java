@@ -1,12 +1,19 @@
-package logic;
+package com.solvd.course.logic;
 
-import exceptions.NoFlightsFoundException;
-import exceptions.OverweightBaggageException;
-import exceptions.RoutePlanningException;
-import interfaces.Notifiable;
-import model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.solvd.course.exceptions.NoFlightsFoundException;
+import com.solvd.course.exceptions.OverweightBaggageException;
+import com.solvd.course.exceptions.RoutePlanningException;
+import com.solvd.course.interfaces.Notifiable;
+import com.solvd.course.model.Airport;
+import com.solvd.course.model.Baggage;
+import com.solvd.course.model.BaggagePolicy;
+import com.solvd.course.model.Flight;
+import com.solvd.course.model.Passenger;
+import com.solvd.course.model.Route;
+import com.solvd.course.model.Ticket;
 
 public class TravelService {
 

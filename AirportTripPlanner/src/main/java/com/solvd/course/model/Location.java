@@ -1,6 +1,6 @@
-package model;
+package com.solvd.course.model;
 
-import interfaces.Identifiable;
+import com.solvd.course.interfaces.Identifiable;
 
 public abstract class Location implements Identifiable {
     private String code;

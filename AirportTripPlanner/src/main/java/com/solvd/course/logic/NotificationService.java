@@ -1,8 +1,9 @@
-package logic;
+package com.solvd.course.logic;
 
-import interfaces.Notifiable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.solvd.course.interfaces.Notifiable;
 
 public class NotificationService implements Notifiable {
     private static final Logger logger = LogManager.getLogger(NotificationService.class);
