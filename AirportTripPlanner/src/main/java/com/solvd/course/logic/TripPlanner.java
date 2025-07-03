@@ -2,6 +2,7 @@ package com.solvd.course.logic;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.solvd.course.exceptions.NoFlightsFoundException;
 import com.solvd.course.exceptions.RoutePlanningException;
@@ -12,7 +13,8 @@ import com.solvd.course.model.Route;
 public class TripPlanner {
     public Route findBestRoute(Airport from, Airport to) throws NoFlightsFoundException, RoutePlanningException {
         List<Flight> directFlights = from.getFlights().stream()
-                .filter(f -> f.getTo().equals(to)).toList();
+                .filter(f -> f.getTo().equals(to))
+                .collect(Collectors.toList());
 
         if (directFlights.isEmpty()) {
             throw new NoFlightsFoundException("No direct flights from " + from.getCode() + " to " + to.getCode());

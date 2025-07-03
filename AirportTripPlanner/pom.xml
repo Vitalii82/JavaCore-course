@@ -9,6 +9,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <version>1</version>
 
     <properties>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <carina-core_version>RELEASE</carina-core_version>
         <carina-cucumber_version>RELEASE</carina-cucumber_version>
