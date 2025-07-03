@@ -1,27 +1,22 @@
 package com.solvd.course.logic;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.solvd.course.exceptions.NoFlightsFoundException;
 import com.solvd.course.exceptions.OverweightBaggageException;
 import com.solvd.course.exceptions.RoutePlanningException;
 import com.solvd.course.interfaces.Notifiable;
-import com.solvd.course.model.Airport;
-import com.solvd.course.model.Baggage;
-import com.solvd.course.model.BaggagePolicy;
-import com.solvd.course.model.Flight;
-import com.solvd.course.model.Passenger;
-import com.solvd.course.model.Route;
-import com.solvd.course.model.Ticket;
+import com.solvd.course.model.*;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class TravelService {
-
-    private static final Logger logger = LogManager.getLogger(TravelService.class);
-
-    private TripPlanner planner = new TripPlanner();
-    private Notifiable notifier;
-    private BaggagePolicy baggagePolicy = new BaggagePolicy(23.0, 10.0);
+    private final TripPlanner planner = new TripPlanner();
+    private final Notifiable notifier;
+    private final BaggagePolicy baggagePolicy = new BaggagePolicy(23.0, 10.0);
+    private final Map<String, Ticket<?>> issuedTickets = new HashMap<>();
+    private final Set<Passenger> passengerRegistry = new HashSet<>();
 
     public TravelService(Notifiable notifier) {
         this.notifier = notifier;
@@ -29,11 +24,7 @@ public class TravelService {
 
     public void planTrip(Passenger passenger, Airport from, Airport to, Baggage baggage) {
         try {
-            Route route = planner.findBestRoute(from, to);
-            if (route == null) {
-                throw new NoFlightsFoundException("No route found");
-            }
-
+            Route<?> route = planner.findBestRoute(from, to);
             Flight bestFlight = route.getFlights().get(0);
             double baggageFee = baggagePolicy.calculateOvercharge(baggage);
 
@@ -41,17 +32,18 @@ public class TravelService {
                 throw new OverweightBaggageException("Excess baggage: $" + baggageFee);
             }
 
-            Ticket ticket = new Ticket(passenger, bestFlight);
+            Ticket<Passenger> ticket = new Ticket<>(passenger, bestFlight);
             double totalPrice = ticket.getPrice() + baggageFee;
+
+            passengerRegistry.add(passenger);
+            issuedTickets.put(ticket.getFlight().getId(), ticket);
 
             notifier.sendConfirmation("Ticket: " + ticket +
                     "\nBaggage: " + baggage +
                     "\nTotal: $" + totalPrice);
-            logger.info("Route selected: " + route);
 
         } catch (NoFlightsFoundException | RoutePlanningException | OverweightBaggageException e) {
             notifier.sendFailure(e.getMessage());
-            logger.error("Trip planning failed: ", e);
         }
     }
 }

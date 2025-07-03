@@ -1,63 +1,25 @@
 package com.solvd.course.model;
 
-import com.solvd.course.interfaces.Flyable;
 import com.solvd.course.interfaces.HasDuration;
 import com.solvd.course.interfaces.Payable;
 
-public class Flight implements Flyable, Payable, HasDuration {
-    private final String id;
+public class Flight implements HasDuration, Payable {
     private final Airport from;
     private final Airport to;
     private final double price;
-    private final int durationInMinutes;
+    private final int durationMinutes;
 
-    public Flight(String id, Airport from, Airport to, double price, int durationInMinutes) {
-        this.id = id;
+    public Flight(Airport from, Airport to, double price, int durationMinutes) {
         this.from = from;
         this.to = to;
         this.price = price;
-        this.durationInMinutes = durationInMinutes;
+        this.durationMinutes = durationMinutes;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public Airport getFrom() {
-        return from;
-    }
-
-    public Airport getTo() {
-        return to;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
+    public Airport getFrom() { return from; }
+    public Airport getTo() { return to; }
     @Override
-    public int getDurationInMinutes() {
-        return durationInMinutes;
-    }
-
+    public double getPrice() { return price; }
     @Override
-    public void fly() {
-        System.out.println("Flying from " + from.getCode() + " to " + to.getCode());
-    }
-
-    @Override
-    public boolean startTurboEngine( {
-        System.out.println("Turbo engine started for flight " + id);
-        return true;
-    }
-
-    @Override
-    public double calculatePrice() {
-        return price;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Flight %s: %s → %s ($%.2f, %d mins)", id, from.getCode(), to.getCode(), price, durationInMinutes);
-    }
+    public int getDurationInMinutes() { return durationMinutes; }
 }

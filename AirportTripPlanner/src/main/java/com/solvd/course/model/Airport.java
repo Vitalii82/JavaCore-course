@@ -1,26 +1,16 @@
 package com.solvd.course.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Airport {
     private final String code;
     private final List<Flight> flights;
 
-    public Airport(String code) {
+    public Airport(String code, String flights) {
         this.code = code;
-        this.flights = new ArrayList<>();
+        this.flights = flights;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public List<Flight> getFlights() {
-        return flights;
-    }
-
-    public void addFlight(Flight flight) {
-        flights.add(flight);
-    }
+    public String getCode() { return code; }
+    public List<Flight> getFlights() { return flights; }
 }
