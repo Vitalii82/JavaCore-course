@@ -1,35 +1,16 @@
 package com.solvd.course;
 
-import com.solvd.course.logic.NotificationService;
-import com.solvd.course.logic.TravelService;
-import com.solvd.course.model.*;
+import com.solvd.course.logic.ArticleAnalyzer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        // Create flights list for airports
-        List<Flight> flightsFromA = new ArrayList<>();
-        List<Flight> flightsFromB = new ArrayList<>();
+        File input = new File("src/main/resources/article.txt");
+        File output = new File("src/main/resources/analysis_output.txt");
 
-        // Create airports
-        Airport from = new Airport("KBP", flightsFromA);
-        Airport to = new Airport("LWO", flightsFromB);
+        ArticleAnalyzer.analyze(input, output);
 
-        // Create flight and assign to departure airport
-        Flight flight = new Flight("FL123", from, to, 150.0, 85);
-        from.getFlights().add(flight);
-
-        // Create passenger and baggage
-        Passenger passenger = new Passenger("Vitalii Svinovei");
-        Baggage baggage = new Baggage(22.0, 8.0); // within limits
-
-        // Create TravelService with notification
-        NotificationService notifier = new NotificationService();
-        TravelService travelService = new TravelService(notifier);
-
-        // Plan the trip
-        travelService.planTrip(passenger, from, to, baggage);
+        System.out.println("Analysis complete. Check 'analysis_output.txt' for results.");
     }
 }
