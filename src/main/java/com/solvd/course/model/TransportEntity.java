@@ -1,19 +1,18 @@
+
 package com.solvd.course.model;
 
-public abstract class TransportEntity {
-    private Airport from;
-    private Airport to;
+import com.solvd.course.annotations.EntityInfo;
 
-    public TransportEntity(Airport from, Airport to) {
-        this.from = from;
-        this.to = to;
+@EntityInfo(author = "Svinovei_Vitalii", description = "Represents a transport entity with ID and type")
+public class TransportEntity {
+    private String id;
+    private String type;
+
+    public TransportEntity(String id, String type) {
+        this.id = id;
+        this.type = type;
     }
 
-    public Airport getFrom() { return from; }
-    public void setFrom(Airport from) { this.from = from; }
-
-    public Airport getTo() { return to; }
-    public void setTo(Airport to) { this.to = to; }
-
-    public abstract String getTransportType();
+    public String getId() { return id; }
+    public String getType() { return type; }
 }

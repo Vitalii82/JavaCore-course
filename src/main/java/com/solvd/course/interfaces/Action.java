@@ -1,3 +1,4 @@
+
 package com.solvd.course.interfaces;
 
 @FunctionalInterface
