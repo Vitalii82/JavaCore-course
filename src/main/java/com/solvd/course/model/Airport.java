@@ -3,22 +3,22 @@ package com.solvd.course.model;
 import java.util.List;
 
 public class Airport {
-    private String code;
     private String name;
+    private String location;
     private List<Flight> flights;
 
-    public Airport(String code, String name, List<Flight> flights) {
-        this.code = code;
+    public Airport(String name, String location, List<Flight> flights) {
         this.name = name;
+        this.location = location;
         this.flights = flights;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public List<Flight> getFlights() {
