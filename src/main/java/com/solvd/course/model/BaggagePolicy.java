@@ -2,15 +2,20 @@ package com.solvd.course.model;
 
 public class BaggagePolicy {
     private final double freeWeight;
-    private final double overchargePerKg;
+    private final double feePerKg;
 
-    public BaggagePolicy(double freeWeight, double overchargePerKg) {
+    public BaggagePolicy(double freeWeight, double feePerKg) {
         this.freeWeight = freeWeight;
-        this.overchargePerKg = overchargePerKg;
+        this.feePerKg   = feePerKg;
     }
 
+    /**
+     * Calculates the overweight fee.
+     * @param baggage the baggage record
+     * @return the excess‐weight fee, or 0 if within free allowance
+     */
     public double calculateOvercharge(Baggage baggage) {
-        double excess = baggage.getWeight() - freeWeight;
-        return excess > 0 ? excess * overchargePerKg : 0;
+        double overweight = baggage.weight() - freeWeight;
+        return overweight > 0 ? overweight * feePerKg : 0.0;
     }
 }
