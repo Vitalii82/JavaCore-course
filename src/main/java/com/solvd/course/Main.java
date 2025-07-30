@@ -1,53 +1,40 @@
-
 package com.solvd.course;
 
+import com.solvd.course.model.Airport;
+import com.solvd.course.model.Flight;
+import com.solvd.course.logic.TravelService;
 import com.solvd.course.interfaces.Action;
 import com.solvd.course.interfaces.Condition;
 import com.solvd.course.interfaces.Processor;
-import com.solvd.course.logic.TravelService;
-import com.solvd.course.model.*;
+import com.solvd.course.threading.NotificationSingleton;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        Airport from = new Airport("LAX", "Los Angeles International Airport");
-        Airport to = new Airport("JFK", "John F. Kennedy International Airport");
+        Airport from = new Airport("LAX", "Los Angeles", new ArrayList<>());
+        Airport to = new Airport("JFK", "New York", new ArrayList<>());
 
-        List<Flight> flights = new ArrayList<>();
-        flights.add(new Flight("AA123", from, to, 300.0, 360));
-        flights.add(new Flight("UA456", from, to, 350.0, 400));
-        flights.add(new Flight("DL789", from, to, 250.0, 420));
-        from.setFlights(flights);
+        List<Flight> flights = List.of(
+            new Flight("1","AA123",300.0,360,"LAX","JFK"),
+            new Flight("2","UA456",350.0,400,"LAX","JFK"),
+            new Flight("3","DL789",250.0,420,"LAX","JFK")
+        );
+        from.getFlights().addAll(flights);
 
-        Processor<Flight> flightProcessor = f -> System.out.println("Flight " + f.getFlightNumber() + " costs $" + f.getPrice());
-        from.getFlights().forEach(flightProcessor::process);
+        Processor<Flight> proc = f -> System.out.println("Flight: " + f.flightNumber() + " Price: " + f.price());
+        from.getFlights().forEach(proc::process);
 
-        Condition<Flight> cheapFlight = f -> f.getPrice() < 300;
-        List<Flight> cheapFlights = from.getFlights().stream()
-            .filter(cheapFlight::test)
-            .collect(Collectors.toList());
+        Condition<Flight> cond = f -> f.price() < 300;
+        List<Flight> cheap = from.getFlights().stream().filter(cond::test).collect(Collectors.toList());
 
-        System.out.println("\nCheap Flights:");
-        cheapFlights.forEach(f -> System.out.println(f.getFlightNumber() + " - $" + f.getPrice()));
+        Action<Flight> act = f -> System.out.println("Cheap flight: " + f.flightNumber());
+        cheap.forEach(act::execute);
 
-        Action<Flight> notify = f -> System.out.println("Notification: Flight " + f.getFlightNumber() + " is available.");
-        cheapFlights.forEach(notify::execute);
-
-        Passenger passenger = new Passenger("John Doe");
-        Baggage baggage = new Baggage(18.5);
-        TravelService travelService = new TravelService();
-        travelService.planTrip(passenger, from, to, baggage);
-
-        TransportEntity entity = new TransportEntity("TX999", "Cargo Jet");
-        Annotation[] annotations = entity.getClass().getAnnotations();
-        for (Annotation annotation : annotations) {
-            if (annotation instanceof com.solvd.course.annotations.EntityInfo info) {
-                System.out.println("\nAnnotation Info: Author = " + info.author() + ", Description = " + info.description());
-            }
-        }
+        Runnable r = () -> NotificationSingleton.getInstance().notifyUser("Processing done");
+        new Thread(r,"T1").start();
+        new Thread(r,"T2").start();
     }
 }
