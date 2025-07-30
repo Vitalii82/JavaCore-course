@@ -1,48 +1,29 @@
 package com.solvd.course.logic;
 
-import com.solvd.course.exceptions.NoFlightsFoundException;
-import com.solvd.course.exceptions.OverweightBaggageException;
-import com.solvd.course.exceptions.RoutePlanningException;
-import com.solvd.course.interfaces.Notifiable;
-import com.solvd.course.model.*;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.solvd.course.model.Flight;
+import com.solvd.course.model.Passenger;
+import com.solvd.course.model.Baggage;
+import com.solvd.course.model.Route;
+import exceptions.NoFlightsFoundException;
+import exceptions.OverweightBaggageException;
+import exceptions.RoutePlanningException;
+import interfaces.Notifiable;
 
 public class TravelService {
     private final TripPlanner planner = new TripPlanner();
     private final Notifiable notifier;
-    private final BaggagePolicy baggagePolicy = new BaggagePolicy(23.0, 10.0);
-    private final Map<String, Ticket<?>> issuedTickets = new HashMap<>();
-    private final Set<Passenger> passengerRegistry = new HashSet<>();
 
     public TravelService(Notifiable notifier) {
         this.notifier = notifier;
     }
 
-    public void planTrip(Passenger passenger, Airport from, Airport to, Baggage baggage) {
+    public void planTrip(Passenger p, Airport from, Airport to, Baggage bg) {
         try {
-            Route<?> route = planner.findBestRoute(from, to);
-            Flight bestFlight = route.getFlights().get(0);
-            double baggageFee = baggagePolicy.calculateOvercharge(baggage);
-
-            if (baggageFee > 0) {
-                throw new OverweightBaggageException("Excess baggage: $" + baggageFee);
-            }
-
-            Ticket<Passenger> ticket = new Ticket<>(passenger, bestFlight);
-            double totalPrice = ticket.getPrice() + baggageFee;
-
-            passengerRegistry.add(passenger);
-            issuedTickets.put(ticket.getFlight().getId(), ticket);
-
-            notifier.sendConfirmation("Ticket: " + ticket +
-                    "\nBaggage: " + baggage +
-                    "\nTotal: $" + totalPrice);
-
-        } catch (NoFlightsFoundException | RoutePlanningException | OverweightBaggageException e) {
+            Route route = planner.findBestRoute(from, to);
+            Flight f = route.getFlights().get(0);
+            double baggageFee = bg.weight() > 20 ? (bg.weight() - 20) * 10 : 0;
+            notifier.sendConfirmation("Flight:" + f.flightNumber() + " Price: " + f.price() + " BaggageFee: " + baggageFee);
+        } catch (Exception e) {
             notifier.sendFailure(e.getMessage());
         }
     }

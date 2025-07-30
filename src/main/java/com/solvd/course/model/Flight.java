@@ -2,7 +2,7 @@ package com.solvd.course.model;
 
 import com.solvd.course.annotations.EntityInfo;
 
-@EntityInfo(author = "Team", description = "Flight entity", version = 1)
+@EntityInfo(author = "Update", description = "Flight record", version = 1)
 public record Flight(
     String id,
     String flightNumber,

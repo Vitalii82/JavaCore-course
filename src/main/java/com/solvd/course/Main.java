@@ -2,37 +2,39 @@ package com.solvd.course;
 
 import com.solvd.course.model.Airport;
 import com.solvd.course.model.Flight;
+import com.solvd.course.logic.TravelService;
+import com.solvd.course.interfaces.Action;
+import com.solvd.course.interfaces.Condition;
+import com.solvd.course.interfaces.Processor;
 import com.solvd.course.threading.NotificationSingleton;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        Airport from = new Airport("Kyiv Boryspil", "Kyiv", null);
-        Airport to = new Airport("Lviv Danylo Halytskyi", "Lviv", null);
+        Airport from = new Airport("LAX", "Los Angeles", new ArrayList<>());
+        Airport to = new Airport("JFK", "New York", new ArrayList<>());
 
-        List<Flight> flights = Arrays.asList(
-                new Flight("F1", "PS123", 100.0, 60, from.getName(), to.getName()),
-                new Flight("F2", "PS456", 120.0, 70, from.getName(), to.getName()),
-                new Flight("F3", "PS789", 90.0, 80, from.getName(), to.getName())
+        List<Flight> flights = List.of(
+            new Flight("1","AA123",300.0,360,"LAX","JFK"),
+            new Flight("2","UA456",350.0,400,"LAX","JFK"),
+            new Flight("3","DL789",250.0,420,"LAX","JFK")
         );
+        from.getFlights().addAll(flights);
 
-        flights.forEach(f -> System.out.printf("Flight %s from %s to %s: $%.2f, %d min%n",
-                f.flightNumber(), f.from(), f.to(), f.price(), f.duration()));
+        Processor<Flight> proc = f -> System.out.println("Flight: " + f.flightNumber() + " Price: " + f.price());
+        from.getFlights().forEach(proc::process);
 
-        // Threaded notification demo
-        Runnable task = () -> {
-            NotificationSingleton notifier = NotificationSingleton.getInstance();
-            notifier.notifyUser("Processing flight data...");
-        };
+        Condition<Flight> cond = f -> f.price() < 300;
+        List<Flight> cheap = from.getFlights().stream().filter(cond::test).collect(Collectors.toList());
 
-        Thread t1 = new Thread(task, "Worker-1");
-        Thread t2 = new Thread(task, "Worker-2");
-        Thread t3 = new Thread(task, "Worker-3");
+        Action<Flight> act = f -> System.out.println("Cheap flight: " + f.flightNumber());
+        cheap.forEach(act::execute);
 
-        t1.start();
-        t2.start();
-        t3.start();
+        Runnable r = () -> NotificationSingleton.getInstance().notifyUser("Processing done");
+        new Thread(r,"T1").start();
+        new Thread(r,"T2").start();
     }
 }

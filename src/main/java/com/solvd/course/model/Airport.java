@@ -3,9 +3,9 @@ package com.solvd.course.model;
 import java.util.List;
 
 public class Airport {
-    private String name;
-    private String location;
-    private List<Flight> flights;
+    private final String name;
+    private final String location;
+    private final List<Flight> flights;
 
     public Airport(String name, String location, List<Flight> flights) {
         this.name = name;
@@ -13,15 +13,7 @@ public class Airport {
         this.flights = flights;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public List<Flight> getFlights() {
-        return flights;
-    }
+    public String getName() { return name; }
+    public String getLocation() { return location; }
+    public List<Flight> getFlights() { return flights; }
 }
