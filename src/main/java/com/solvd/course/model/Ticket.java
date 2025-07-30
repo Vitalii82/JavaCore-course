@@ -6,10 +6,7 @@ public class Ticket {
 
     public Ticket(Passenger passenger, Flight flight) {
         this.passenger = passenger;
-        this.flight = flight;
+        this.flight    = flight;
     }
-
-    public double price() {
-        return flight.price();
-    }
+    public double price() { return flight.price(); }
 }
