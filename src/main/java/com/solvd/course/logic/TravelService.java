@@ -19,11 +19,10 @@ public class TravelService {
             Route route = planner.findBestRoute(from, to);
             Flight f     = route.getFlights().get(0);
             double fee   = bg.weight() > 20 ? (bg.weight()-20)*5 : 0;
-            notifier.sendConfirmation(
-                "Flight " + f.flightNumber() +
-                " Price: $" + f.price() +
-                " Baggage fee: $" + fee);
-        } catch (Exception e) {
+            notifier.sendConfirmation("Flight " + f.flightNumber() +
+                                      " Price: $" + f.price() +
+                                      " Baggage fee: $" + fee);
+        } catch(Exception e) {
             notifier.sendFailure(e.getMessage());
         }
     }
